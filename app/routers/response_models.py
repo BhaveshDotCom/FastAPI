@@ -10,9 +10,9 @@ router = APIRouter(
 
 
 class BlogIn(BaseModel):
-    id: int
-    title: str
-    abstract: str
+    id: int = 0
+    title: str = None
+    abstract: str = None
     model_config = ConfigDict(extra="forbid")
 
 

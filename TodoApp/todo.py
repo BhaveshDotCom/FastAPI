@@ -1,8 +1,20 @@
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Response, Request
 from pydantic import BaseModel, Field
 from uuid import UUID, uuid4
+import json
 
 app = FastAPI()
+
+
+@app.middleware("http")
+async def request_details(request: Request, call_next):
+    print(request["path"])
+    print(request["method"])
+    payload = await request.body()
+    if payload:
+        print(json.loads(payload))
+    response = await call_next(request)
+    return response
 
 # local variable for todos
 db: list[Todo] = []
